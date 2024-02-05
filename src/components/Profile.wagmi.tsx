@@ -1,13 +1,14 @@
 import { useAccount, useDisconnect } from 'wagmi'
-import { useWeb3Modal } from '@web3modal/wagmi/react'
 
 export default function Profile() {
-  const { address, isConnected } = useAccount()
+  const { address } = useAccount()
   const { disconnect } = useDisconnect()
-  const { open } = useWeb3Modal()
-  if (isConnected) {
-    console.log("User is connected with account: ", address)
-  }
-  if (!isConnected) return <div><button className="text-red-500" onClick={() => open({view: 'AllWallets'})}>Connect with different wallet</button></div>
-  return <div><button className="mt-4 text-red-500" onClick={() => disconnect()}>Disconnect</button></div>
+
+  return <div className="flex flex-col items-center">
+    <div className="flex flex-col gap-1 items-center">
+      <h1 className="text-2xl font-semibold">Your Account</h1>
+      <p className="text-sm">{address}</p>
+    </div>
+    <button className="mt-2 p-2 bg-red-500 text-white rounded-md transition-all duration-200 hover:bg-red-600" onClick={() => disconnect()}>Disconnect</button>
+  </div>
 }
